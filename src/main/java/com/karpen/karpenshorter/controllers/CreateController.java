@@ -1,11 +1,10 @@
 package com.karpen.karpenshorter.controllers;
 
 import com.karpen.karpenshorter.service.UrlShortService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class UrlController {
+public class CreateController {
 
     private UrlShortService shortService = new UrlShortService();
 
