@@ -55,7 +55,7 @@ public class UrlShortService {
 
     private void saveUrls(){
         try {
-            objectMapper.writeValue(new File("urls.json"), urls);
+            objectMapper.writeValue(new File("/root/urls.json"), urls);
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -63,7 +63,7 @@ public class UrlShortService {
 
     private void loadUrls(){
         try {
-            urls = objectMapper.readValue(new File("urls.json"), objectMapper.getTypeFactory().constructCollectionType(List.class, Url.class));
+            urls = objectMapper.readValue(new File("/root/urls.json"), objectMapper.getTypeFactory().constructCollectionType(List.class, Url.class));
         } catch (IOException e){
             e.printStackTrace();
         }

@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  app:
+    image: karpenwebsite:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8085:8085
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    volumes:
+      - ./root:/root
