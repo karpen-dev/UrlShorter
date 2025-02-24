@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UrlShortService {
@@ -46,6 +47,33 @@ public class UrlShortService {
                 .orElse("Error url searching");
     }
 
+    public boolean deleteUrl(String shortUrl){
+        loadUrls();
+
+        if (!(findUrl(shortUrl))){
+            return false;
+        }
+
+        Optional<Url> url = getUrl(shortUrl);
+        urls.remove(url.get());
+
+        saveUrls();
+
+        return true;
+    }
+
+    public Optional<Url> getUrl(String shortUrl){
+        loadUrls();
+
+        return urls.stream().filter(url -> url.getShortUrl().equals(shortUrl)).findFirst();
+    }
+
+    public List<Url> getAllUrls(){
+        loadUrls();
+
+        return urls;
+    }
+
     private boolean findUrl(String shortUrl) {
         loadUrls();
 
@@ -55,7 +83,7 @@ public class UrlShortService {
 
     private void saveUrls(){
         try {
-            objectMapper.writeValue(new File("/root/urls.json"), urls);
+            objectMapper.writeValue(new File("urls.json"), urls);
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -63,7 +91,7 @@ public class UrlShortService {
 
     private void loadUrls(){
         try {
-            urls = objectMapper.readValue(new File("/root/urls.json"), objectMapper.getTypeFactory().constructCollectionType(List.class, Url.class));
+            urls = objectMapper.readValue(new File("urls.json"), objectMapper.getTypeFactory().constructCollectionType(List.class, Url.class));
         } catch (IOException e){
             e.printStackTrace();
         }
